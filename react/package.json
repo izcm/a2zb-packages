@@ -15,7 +15,7 @@
   },
   "peerDependencies": {
     "react": "^19",
-    "@a2zb/styles": "workspace:*"
+    "@a2zb/styles": "^1.0.0"
   },
   "devDependencies": {
     "@a2zb/styles": "workspace:*",
