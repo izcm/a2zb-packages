@@ -1,0 +1,114 @@
+@theme {
+  /* --- backgrounds --- */
+  /* use as: bg-primary, bg-secondary, bg-surface */
+  --color-primary: var(--bg-primary);
+  --color-secondary: var(--bg-secondary);
+  --color-surface: var(--bg-surface);
+
+  /* --- text --- */
+  /* use as: text-fg (full), text-subtle (secondary), text-muted (dim/disabled) */
+  --color-fg: var(--text-primary);
+  --color-subtle: var(--text-subtle);
+  --color-muted: var(--text-muted);
+
+  /* --- borders --- */
+  /* use as: border-default, border-soft */
+  --color-default: var(--border-default);
+  --color-soft: var(--border-soft);
+
+  /* --- accent --- */
+  /* use as: text-accent, bg-accent, border-accent (+ /opacity works) */
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-weak: var(--accent-weak);
+
+  /* --- status --- */
+  /* use as: text-success, text-warning, text-failure (+ -weak variants) */
+  --color-success: var(--success);
+  --color-success-weak: var(--success-weak);
+  --color-warning: var(--warning);
+  --color-warning-weak: var(--warning-weak);
+  --color-failure: var(--failure);
+  --color-failure-weak: var(--failure-weak);
+
+  /* --- typography --- */
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Helvetica,
+    Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+
+  --text-hero: clamp(1.75rem, 1.4rem + 1.6vw, 3.1rem);
+  --text-h2: clamp(1.25rem, 1.1rem + 0.8vw, 1.875rem);
+}
+
+:root[data-theme="runtime"] {
+  color-scheme: dark;
+
+  --bg-primary: #0b0b0e;
+  --bg-secondary: #1a1a20;
+  --bg-surface: #131316;
+  --bg-muted: rgba(120, 255, 180, 0.05);
+
+  --text-primary: rgba(230, 235, 240, 0.94);
+  --text-subtle: rgba(195, 205, 215, 0.75);
+  --text-muted: rgba(165, 175, 185, 0.6);
+
+  --border-default: rgba(120, 255, 180, 0.35);
+  --border-soft: rgba(120, 255, 180, 0.15);
+
+  --accent-strong: #66ffb2; /* rare, special */
+  --accent: #49ca8a; /* normal primary */
+  --accent-weak: rgba(94, 230, 163, 0.65); /* default usage */
+
+  --accent-neutral: #5ee7ff;
+
+  --success: #4cff9a;
+  --success-weak: rgba(76, 255, 154, 0.65);
+
+  --warning: #ffc12f;
+  --warning-weak: #ffc12fb9;
+
+  --failure: #ff2d55;
+  --failure-weak: rgba(255, 45, 85, 0.65);
+
+  --panel-shadow:
+    0 0 10px rgba(102, 255, 178, 0.25), 0 0 40px rgba(102, 255, 178, 0.1);
+}
+
+:root[data-theme="void"] {
+  color-scheme: dark;
+
+  --bg-primary: #010208;
+  --bg-secondary: #060826; /* more blue */
+  --bg-surface: #0b0f29; /* noticeably lifted */
+  --bg-muted: rgba(120, 140, 255, 0.12);
+
+  --text-primary: rgba(220, 222, 235, 0.95);
+  --text-subtle: rgba(190, 195, 225, 0.78);
+  --text-muted: rgba(170, 180, 220, 0.65);
+
+  --border-default: rgba(120, 140, 255, 0.45);
+  --border-soft: rgba(120, 140, 255, 0.22);
+
+  --accent: #7c84ff;
+  --accent-weak: rgba(124, 132, 255, 0.7);
+  --accent-strong: #a5abff;
+
+  --accent-neutral: #d6ff6b;
+  --accent-neutral-weak: rgba(214, 255, 107, 0.55);
+
+  --success: #7cf7d4;
+  --success-weak: rgba(124, 247, 212, 0.6);
+
+  --warning: #d6ff6b;
+  --warning-weak: rgba(214, 255, 107, 0.5);
+
+  --failure: #f0356a;
+  --failure-weak: rgba(240, 53, 106, 0.75);
+
+  --panel-shadow:
+    0 0 24px rgba(124, 132, 255, 0.22), 0 0 80px rgba(124, 132, 255, 0.14),
+    0 0 160px rgba(58, 209, 255, 0.1);
+}

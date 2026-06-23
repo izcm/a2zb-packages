@@ -1,0 +1,23 @@
+{
+  "name": "@a2zb/next",
+  "version": "1.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "peerDependencies": {
+    "next": ">=14",
+    "react": "^19"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "next": "^15",
+    "react": "^19.2.7",
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "@a2zb/react",
+  "version": "1.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "focus-trap-react": "^12.0.0",
+    "sonner": "^2.0.7",
+    "@a2zb/lib": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^19",
+    "@a2zb/styles": "workspace:*"
+  },
+  "devDependencies": {
+    "@a2zb/styles": "workspace:*",
+    "@types/react": "^19.2.17",
+    "react": "^19.2.7",
+    "typescript": "^6.0.3"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}

@@ -1,8 +1,9 @@
 {
-  "name": "@a2zb/packages",
-  "version": "1.0.0",
-  "type": "module",
-  "files": [
-    "abis"
-  ]
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r build"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
 }

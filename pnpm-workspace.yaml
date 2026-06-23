@@ -1,0 +1,8 @@
+packages:
+  - "react"
+  - "next"
+  - "abis"
+  - "styles"
+  - "lib"
+allowBuilds:
+  sharp: false

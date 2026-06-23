@@ -1,0 +1,7 @@
+{
+  "name": "@a2zb/styles",
+  "exports": {
+    ".": "./index.css",
+    "./*.css": "./*.css"
+  }
+}

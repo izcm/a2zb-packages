@@ -1,0 +1,36 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-mono, ui-monospace);
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--bg-primary),
+    0 0 0 4px color-mix(in oklab, var(--accent) 80%, white);
+}
+
+input:focus {
+  outline: none;
+  border-color: color-mix(in oklab, var(--accent) 35%, var(--border-default));
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 5%, transparent);
+  background: color-mix(in oklab, var(--bg-surface) 8%, var(--accent) 5%);
+}

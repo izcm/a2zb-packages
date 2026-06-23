@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "jsx": "react-jsx",
+    "strict": true,
+    "module": "ESNext",
+    "target": "ES2022",
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["./components/*"]
+    }
+  },
+  "include": ["src"]
+}
