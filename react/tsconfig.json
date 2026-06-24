@@ -6,11 +6,12 @@
     "module": "ESNext",
     "target": "ES2022",
     "outDir": "dist",
-    "rootDir": ".",
+    "rootDir": "src",
     "baseUrl": "./src",
     "paths": {
       "@components/*": ["./components/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["**/*.test.ts", "**/*.test.tsx"]
 }
