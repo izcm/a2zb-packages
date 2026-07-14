@@ -1,6 +1,6 @@
 # a2zb-packages
 
-Shared build artifacts and development resources used across the A2Z Blocks ecosystem. 
+Shared build artifacts and development resources used across the IzBlocks ecosystem. 
 
 ## Contents
 
