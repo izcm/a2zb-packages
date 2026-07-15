@@ -1,0 +1,26 @@
+{
+  "name": "@a2zb/blockchain-react-wagmi",
+  "version": "1.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "peerDependencies": {
+    "react": "^19",
+    "viem": "^2",
+    "wagmi": "^2"
+  },
+  "devDependencies": {
+    "react": "^19.2.7",
+    "typescript": "^6.0.3",
+    "viem": "2.55.2",
+    "vitest": "^4.1.9",
+    "wagmi": "^2"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  }
+}

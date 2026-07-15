@@ -1,5 +1,5 @@
 {
-  "name": "@a2zb/lib",
+  "name": "@a2zb/blockchain-viem",
   "version": "1.0.0",
   "type": "module",
   "files": [
@@ -7,11 +7,16 @@
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "peerDependencies": {
+    "viem": "^2"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "viem": "^2",
+    "vitest": "^4.1.9"
+  },
   "scripts": {
     "build": "tsc",
     "test": "vitest run"
-  },
-  "devDependencies": {
-    "vitest": "^4.1.9"
   }
 }

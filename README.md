@@ -1,6 +1,10 @@
 # a2zb-packages
 
+<<<<<<< HEAD
 Shared build artifacts and development resources used across the IzBlocks ecosystem.
+=======
+Shared build artifacts and development resources used across the `a2zb` ecosystem.
+>>>>>>> e9ec2a5 (big move of reusable components from trading-terminal repo)
 
 ## Contents
 
