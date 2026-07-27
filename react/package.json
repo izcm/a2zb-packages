@@ -10,7 +10,8 @@
   "dependencies": {
     "@a2zb/lib": "1.0.0",
     "clsx": "^2.1.1",
-    "focus-trap-react": "^12.0.0"
+    "focus-trap-react": "^12.0.0",
+    "tailwind-merge": "^3.6.0"
   },
   "peerDependencies": {
     "@a2zb/styles": "^1.0.0",
@@ -19,16 +20,23 @@
   },
   "devDependencies": {
     "@a2zb/styles": "workspace:*",
+    "@tailwindcss/vite": "^4",
     "@testing-library/react": "^16.3.2",
+    "@types/node": "^24",
     "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4",
     "happy-dom": "^15",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "sonner": "^2.0.7",
     "typescript": "^6.0.3",
+    "vite": "^7",
     "vitest": "^4.1.9"
   },
   "scripts": {
     "build": "tsc",
+    "playground": "vite playground",
     "test": "vitest run"
   }
 }

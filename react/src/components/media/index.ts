@@ -1,2 +1,3 @@
-export * from './Gallery'
-export * from './GalleryItem'
+export * from "./Gallery";
+export * from "./GalleryItem";
+export * from "./ImageRow";

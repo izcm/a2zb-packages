@@ -1,6 +1,6 @@
 import { truncateHex, type Hex } from "@a2zb/lib";
 
-import { Copyable } from "./Copyable";
+import { Copyable } from "../Copyable";
 import { DetailFields, type DetailField } from "./DetailFields";
 
 // --- badge ---

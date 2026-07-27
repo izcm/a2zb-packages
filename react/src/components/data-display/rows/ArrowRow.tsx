@@ -1,10 +1,12 @@
-import clsx from "clsx";
 import type { ReactNode } from "react";
 import { useEffect, useRef } from "react";
+
+import { cn } from "@/lib/utils/cn";
 
 type ArrowRowProps = {
   isSelected: boolean;
   onSelect: () => void;
+  onEnter?: () => void;
   children: ReactNode;
   className?: string;
   dataId?: string;
@@ -14,6 +16,7 @@ type ArrowRowProps = {
 export function ArrowRow({
   isSelected,
   onSelect,
+  onEnter,
   children,
   className,
   dataId,
@@ -27,14 +30,11 @@ export function ArrowRow({
     }
   }, [isSelected]);
 
-  const appliedClasses =
-    className ??
-    clsx(
-      // default
-      !isSelected && "hover:bg-white/15 bg-secondary/80",
-      // selected
-      isSelected && "bg-accent/20",
-    );
+  const appliedClasses = cn(
+    "hover:bg-white/10 rounded-lg bg-surface border border-soft",
+    isSelected && "bg-accent/25",
+    className,
+  );
 
   return (
     <li
@@ -42,11 +42,12 @@ export function ArrowRow({
       data-id={dataId}
       data-testid={dataTestId}
       tabIndex={isSelected ? 0 : -1}
-      onClick={onSelect}
+      onClick={onEnter ?? onSelect}
       onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
+        if (!onEnter) return;
+        if (e.key === "Enter") {
           e.preventDefault();
-          onSelect();
+          onEnter();
         }
       }}
       className={appliedClasses}
