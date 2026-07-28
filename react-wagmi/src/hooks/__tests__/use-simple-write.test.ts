@@ -3,7 +3,7 @@ import { useSimpleWrite } from "../use-simple-write";
 import { BaseError } from "viem";
 
 const mockWriteContractAsync = vi.fn();
-const mockSimulateContract = vi.fn().mockReturnValue({ request: {} });
+const mockSimulateContract = vi.fn();
 
 type Hex = `0x${string}`;
 
@@ -31,6 +31,7 @@ describe("simpleWrite", () => {
       simulateContract: mockSimulateContract,
     };
     address = "0xabc";
+    vi.clearAllMocks();
   });
 
   const defaultSimpleWriteInput = {
@@ -58,69 +59,100 @@ describe("simpleWrite", () => {
 
   const simpleWriteInput = () => defaultSimpleWriteInput;
 
-  it.each([
-    ["publicClient", () => (publicClient = undefined)],
-    ["address", () => (address = undefined)],
-  ])("returns undefined when no %s", async (_, remove) => {
-    remove();
+  // happy path
+  it("simulates then sends the transaction", async () => {
+    const request = { to: "0x123" };
 
-    const { simpleWrite } = useSimpleWrite();
+    mockSimulateContract.mockResolvedValueOnce({ request });
+    mockWriteContractAsync.mockResolvedValueOnce("0xhash");
 
-    await expect(simpleWrite(simpleWriteInput())).resolves.toBeUndefined();
-    expect(mockSimulateContract).not.toHaveBeenCalled();
-    expect(mockWriteContractAsync).not.toHaveBeenCalled();
-  });
+    const write = getWrite();
 
-  describe("when simulation fails", () => {
-    const onError = vi.fn();
+    await write();
 
-    beforeEach(async () => {
-      mockSimulateContract.mockRejectedValueOnce(new Error("boom"));
-      const write = getWrite({ onError });
-      await expect(write()).resolves.toBeUndefined();
+    expect(mockSimulateContract).toHaveBeenCalledWith({
+      address: defaultSimpleWriteInput.address,
+      abi: defaultSimpleWriteInput.abi,
+      functionName: defaultSimpleWriteInput.functionName,
+      args: defaultSimpleWriteInput.args,
+      value: undefined,
+      account: address,
     });
 
-    it("does not send transaction", () => {
+    expect(mockWriteContractAsync).toHaveBeenCalledWith(request, {
+      onSuccess: undefined,
+      onError: undefined,
+    });
+  });
+
+  // sad paths
+  describe("failures", () => {
+    it.each([
+      ["publicClient", () => (publicClient = undefined)],
+      ["address", () => (address = undefined)],
+    ])("returns undefined when no %s", async (_, remove) => {
+      remove();
+
+      const { simpleWrite } = useSimpleWrite();
+
+      await expect(simpleWrite(simpleWriteInput())).resolves.toBeUndefined();
+      expect(mockSimulateContract).not.toHaveBeenCalled();
       expect(mockWriteContractAsync).not.toHaveBeenCalled();
     });
 
-    it("calls onError", () => {
-      expect(onError).toHaveBeenCalledWith(expect.any(Error));
+    describe("when simulation fails", () => {
+      const onError = vi.fn();
+
+      beforeEach(async () => {
+        mockSimulateContract.mockRejectedValueOnce(new Error("boom"));
+        const write = getWrite({ onError });
+        await expect(write()).resolves.toBeUndefined();
+      });
+
+      it("does not send transaction", () => {
+        expect(mockWriteContractAsync).not.toHaveBeenCalled();
+      });
+
+      it("calls onError", () => {
+        expect(onError).toHaveBeenCalledWith(expect.any(Error));
+      });
     });
-  });
 
-  describe("when the contract-write fails", () => {
-    const onError = vi.fn();
+    describe("when the contract-write fails", () => {
+      const onError = vi.fn();
 
-    beforeEach(async () => {
-      mockWriteContractAsync.mockRejectedValueOnce(new Error("boom"));
-      const write = getWrite({ onError });
-      await expect(write()).resolves.toBeUndefined();
+      beforeEach(async () => {
+        mockSimulateContract.mockReturnValue({ request: {} });
+        mockWriteContractAsync.mockRejectedValueOnce(new Error("boom"));
+
+        const write = getWrite({ onError });
+        await expect(write()).resolves.toBeUndefined();
+      });
+
+      it("attempts the write", () => {
+        expect(mockWriteContractAsync).toHaveBeenCalled();
+      });
+
+      it("calls onError", () => {
+        expect(onError).toHaveBeenCalledWith(expect.any(Error));
+      });
     });
 
-    it("attempts the write", () => {
-      expect(mockWriteContractAsync).toHaveBeenCalled();
-    });
+    describe("error message passed to onError", () => {
+      const onError = vi.fn();
 
-    it("calls onError", () => {
-      expect(onError).toHaveBeenCalledWith(expect.any(Error));
-    });
-  });
+      it.each([
+        ["BaseError", new BaseError("short msg"), "short msg"],
+        ["Error", new Error("plain msg"), "plain msg"],
+        ["non-Error", "string throw", "string throw"],
+      ])("uses the %s message", async (_, thrown, message) => {
+        mockSimulateContract.mockRejectedValueOnce(thrown);
+        const write = getWrite({ onError });
 
-  describe("error message passed to onError", () => {
-    const onError = vi.fn();
+        await write();
 
-    it.each([
-      ["BaseError", new BaseError("short msg"), "short msg"],
-      ["Error", new Error("plain msg"), "plain msg"],
-      ["non-Error", "string throw", "string throw"],
-    ])("uses the %s message", async (_, thrown, message) => {
-      mockSimulateContract.mockRejectedValueOnce(thrown);
-      const write = getWrite({ onError });
-
-      await write();
-
-      expect(onError).toHaveBeenCalledWith(new Error(message));
+        expect(onError).toHaveBeenCalledWith(new Error(message));
+      });
     });
   });
 });
