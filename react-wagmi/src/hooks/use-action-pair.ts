@@ -9,7 +9,7 @@ import {
   ReadFunctionName,
   WriteAction,
   WriteFunctionName,
-} from "@a2zb/blockchain-viem";
+} from "@a2zb/viem";
 
 type ActionPair<
   TReadAbi extends Abi,

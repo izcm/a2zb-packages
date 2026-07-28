@@ -4,13 +4,13 @@ packages:
   - "abis"
   - "styles"
   - "lib"
-  - "blockchain-viem"
-  - "blockchain-react-wagmi"
+  - "viem"
+  - "react-wagmi"
 allowBuilds:
-  bufferutil: set this to true or false
+  bufferutil: true
   esbuild: true
-  keccak: set this to true or false
+  keccak: true
   sharp: false
-  utf-8-validate: set this to true or false
+  utf-8-validate: true
 minimumReleaseAgeExclude:
-  - '@a2zb/lib@1.0.0'
+  - "@a2zb/lib@1.0.0"

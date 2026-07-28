@@ -7,7 +7,7 @@
     "publish:react": "pnpm --filter @a2zb/react build && pnpm --filter @a2zb/react publish --no-git-checks",
     "publish:styles": "pnpm --filter @a2zb/styles publish --no-git-checks",
     "publish:abis": "pnpm --filter @a2zb/abis build && pnpm --filter @a2zb/abis publish --no-git-checks",
-    "publish:viem": "pnpm --filter @a2zb/blockchain-viem build && pnpm --filter @a2zb/blockchain-viem publish --no-git-checks",
+    "publish:viem": "pnpm --filter @a2zb/viem build && pnpm --filter @a2zb/viem publish --no-git-checks",
     "publish:react-wagmi": "pnpm --filter @a2zb/blockchain-react-wagmi build && pnpm --filter @a2zb/blockchain-react-wagmi publish --no-git-checks",
     "publish:all": "pnpm -r build && pnpm -r publish --no-git-checks"
   },

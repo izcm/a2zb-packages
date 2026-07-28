@@ -1,15 +1,13 @@
 import { Abi, BaseError, ContractFunctionName, Hex } from "viem";
-import { useAccount, useChainId, useConfig, useWriteContract } from "wagmi";
-import { getPublicClient } from "wagmi/actions";
+import { useAccount, usePublicClient, useWriteContract } from "wagmi";
 
-import { WriteAction } from "@a2zb/blockchain-viem";
+import { WriteAction } from "@a2zb/viem";
 
 type PayableStatus = "payable" | "nonpayable";
 
 export function useSimpleWrite() {
   const account = useAccount();
-  const chainId = useChainId();
-  const config = useConfig();
+  const publicClient = usePublicClient();
 
   const { writeContractAsync } = useWriteContract();
 
@@ -28,10 +26,7 @@ export function useSimpleWrite() {
     onSuccess?: (hash: Hex) => void;
     onError?: (err: Error) => void;
   }) {
-    if (!account.address) return;
-
-    const publicClient = getPublicClient(config, { chainId });
-    if (!publicClient) throw new Error(`no public client for chain ${chainId}`);
+    if (!account.address || !publicClient) return;
 
     try {
       const { request } = await publicClient.simulateContract({
