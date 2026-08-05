@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 
-import { ImageRow } from "../../media/ImageRow";
-import { DotList } from "../DotList";
+import { ImageRow } from "../../media/ImageRow.js";
+import { DotList } from "../DotList.js";
 
 type Props<T> = {
   image: string;

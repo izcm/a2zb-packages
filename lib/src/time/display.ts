@@ -1,5 +1,5 @@
-import { months } from './constants'
-import { parts } from './parts'
+import { months } from './constants.js'
+import { parts } from './parts.js'
 
 export const tsShort = (ts: number) => {
   const p = parts(ts)

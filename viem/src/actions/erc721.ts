@@ -1,5 +1,5 @@
 import { erc721Abi, type Address, type PublicClient } from 'viem'
-import { makeContractReader } from './contract-reader'
+import { makeContractReader } from './contract-reader.js'
 
 export const readERC721Contract: ReturnType<typeof makeContractReader<typeof erc721Abi>> =
   makeContractReader(erc721Abi)

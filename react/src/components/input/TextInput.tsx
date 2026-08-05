@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils/cn.js";
 
 type Props = {
   placeholder?: string;

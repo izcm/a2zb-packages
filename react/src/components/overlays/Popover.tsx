@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils/cn.js";
 
 type PopoverProps = {
   trigger: React.ReactNode;

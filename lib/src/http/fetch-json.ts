@@ -1,5 +1,5 @@
-import { getResponseError } from "./error";
-import { Result } from "./result";
+import { getResponseError } from "./error.js";
+import { Result } from "./result.js";
 
 export async function fetchJSON<T>(
   url: string,

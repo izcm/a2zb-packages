@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes } from "react";
 
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils/cn.js";
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   color?: string;

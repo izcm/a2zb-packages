@@ -1,7 +1,7 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
-import { renderHook } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 
-import { useTheme } from "../use-theme";
+import { useTheme } from "../use-theme.js";
 
 describe("useTheme", () => {
   beforeEach(() => {
@@ -39,7 +39,9 @@ describe("useTheme", () => {
       const spy = vi.spyOn(document.documentElement, "setAttribute");
 
       const { applyTheme } = setup();
-      applyTheme("fresh");
+      act(() => {
+        applyTheme("fresh");
+      });
 
       expect(document.documentElement.getAttribute("data-theme")).toBe("fresh");
       expect(spy).toHaveBeenCalledWith("data-theme", "fresh");
@@ -49,7 +51,9 @@ describe("useTheme", () => {
       const spy = vi.spyOn(Storage.prototype, "setItem");
 
       const { applyTheme } = setup();
-      applyTheme("fresh");
+      act(() => {
+        applyTheme("fresh");
+      });
 
       expect(localStorage.getItem("theme")).toBe("fresh");
       expect(spy).toHaveBeenCalledWith("theme", "fresh");

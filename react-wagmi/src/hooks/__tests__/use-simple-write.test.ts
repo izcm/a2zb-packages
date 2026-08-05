@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { useSimpleWrite } from "../use-simple-write";
+import { useSimpleWrite } from "../use-simple-write.js";
 import { BaseError } from "viem";
 
 const mockWriteContractAsync = vi.fn();

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Abi, Address, ContractFunctionReturnType, Hash } from "viem";
 import { useReadContract, useWaitForTransactionReceipt } from "wagmi";
 
-import { useSimpleWrite } from "./use-simple-write";
+import { useSimpleWrite } from "./use-simple-write.js";
 import {
   ReadAction,
   ReadFunctionName,

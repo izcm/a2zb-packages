@@ -1,7 +1,7 @@
 import { timeAgo } from "@a2zb/lib";
 import { useState } from "react";
 
-import { Copyable } from "../Copyable";
+import { Copyable } from "../Copyable.js";
 
 const ERROR_TRUNCATE = 80;
 

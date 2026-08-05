@@ -1,6 +1,6 @@
 import type { AnchorHTMLAttributes } from "react";
 
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils/cn.js";
 
 type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {
   /** Tailwind text-color class (drives the currentColor-based border/background), e.g. "text-accent". */

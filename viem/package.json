@@ -16,7 +16,7 @@
     "vitest": "^4.1.9"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "test": "vitest run"
   }
 }

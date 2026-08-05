@@ -1,5 +1,5 @@
 {
-  "name": "@a2zb/blockchain-react-wagmi",
+  "name": "@a2zb/react-wagmi",
   "version": "1.0.0",
   "type": "module",
   "files": [
@@ -8,7 +8,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@a2zb/viem": "workspace:*"
+    "@a2zb/viem": "file:../viem"
   },
   "peerDependencies": {
     "@tanstack/query-core": "^5",
@@ -29,7 +29,7 @@
     "wagmi": "^2"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "test": "vitest run"
   }
 }

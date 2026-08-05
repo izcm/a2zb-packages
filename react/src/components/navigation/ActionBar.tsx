@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils/cn.js";
 
 export type ActionBarItem = {
   icon: ComponentType<{ className?: string }>;

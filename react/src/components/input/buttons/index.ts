@@ -1,1 +1,1 @@
-export * from "./PillBtn";
+export * from "./PillBtn.js";

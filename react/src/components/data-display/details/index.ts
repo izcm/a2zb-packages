@@ -1,2 +1,2 @@
-export * from "./DetailFields";
-export * from "./Details";
+export * from "./DetailFields.js";
+export * from "./Details.js";

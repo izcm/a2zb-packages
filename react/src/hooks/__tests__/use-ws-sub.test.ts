@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { renderHook } from '@testing-library/react'
 
-import { useWsSub } from '../use-ws-sub'
+import { useWsSub } from '../use-ws-sub.js'
 
 describe('useWsSub', () => {
   describe('mount', () => {

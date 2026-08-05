@@ -1,1 +1,1 @@
-export * from './oz-erc721'
+export * from './oz-erc721.js'

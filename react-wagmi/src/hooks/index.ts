@@ -1,2 +1,2 @@
-export * from "./use-simple-write";
-export * from "./use-simple-read";
+export * from "./use-simple-write.js";
+export * from "./use-simple-read.js";

@@ -1,1 +1,1 @@
-export * from './wei'
+export * from './wei.js'

@@ -8,7 +8,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@a2zb/lib": "1.0.0",
+    "@a2zb/lib": "workspace:*",
     "clsx": "^2.1.1",
     "focus-trap-react": "^12.0.0",
     "tailwind-merge": "^3.6.0"
@@ -30,12 +30,13 @@
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "sonner": "^2.0.7",
+    "tsc-alias": "^1.9.1",
     "typescript": "^6.0.3",
     "vite": "^7",
     "vitest": "^4.1.9"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc && tsc-alias --resolve-full-paths",
     "playground": "vite playground",
     "test": "vitest run"
   }

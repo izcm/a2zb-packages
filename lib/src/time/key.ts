@@ -1,4 +1,4 @@
-import type { TimeUnit } from './constants'
+import type { TimeUnit } from './constants.js'
 
 // never used for UI display only for charts => always UTC
 export const timeKey = (ts: number, unit: TimeUnit) => {

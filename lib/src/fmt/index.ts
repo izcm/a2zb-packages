@@ -1,3 +1,3 @@
-export * from './hex'
-export * from './image'
-export * from './string'
+export * from './hex.js'
+export * from './image.js'
+export * from './string.js'

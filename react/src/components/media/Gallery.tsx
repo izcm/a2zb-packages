@@ -1,8 +1,8 @@
 import { ReactNode, RefObject, useEffect } from "react";
 
-import { ArrowRow } from "../data-display";
-import { ArrowList } from "../navigation";
-import { cn } from "@/lib/utils/cn";
+import { ArrowRow } from "../data-display/index.js";
+import { ArrowList } from "../navigation/index.js";
+import { cn } from "@/lib/utils/cn.js";
 
 export type GalleryProps<T> = {
   // items and selection

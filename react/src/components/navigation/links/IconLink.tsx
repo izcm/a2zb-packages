@@ -1,6 +1,6 @@
 import type { AnchorHTMLAttributes, ReactNode } from "react";
 
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils/cn.js";
 
 export const DEFAULT_ICON_CLASSES = "flex items-center h-4 w-4 shrink-0 text-accent";
 

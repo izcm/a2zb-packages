@@ -1,3 +1,3 @@
-export * from './use-theme'
-export * from './use-keyboard-shortcuts'
-export * from './use-ws-sub'
+export * from './use-theme.js'
+export * from './use-keyboard-shortcuts.js'
+export * from './use-ws-sub.js'

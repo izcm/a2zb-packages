@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getResponseError } from "../error";
+import { getResponseError } from "../error.js";
 
 describe("getResponseError", () => {
   it("returns the message field when the body is JSON with a message", async () => {

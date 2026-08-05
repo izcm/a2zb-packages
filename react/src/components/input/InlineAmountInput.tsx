@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { TextInput } from "./TextInput";
+import { TextInput } from "./TextInput.js";
 
 type InlineAmountInputProps = {
   label: string;

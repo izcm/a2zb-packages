@@ -1,3 +1,3 @@
-export * from "./Gallery";
-export * from "./GalleryItem";
-export * from "./ImageRow";
+export * from "./Gallery.js";
+export * from "./GalleryItem.js";
+export * from "./ImageRow.js";

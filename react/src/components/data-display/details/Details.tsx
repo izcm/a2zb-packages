@@ -1,7 +1,7 @@
 import { truncateHex, type Hex } from "@a2zb/lib";
 
-import { Copyable } from "../Copyable";
-import { DetailFields, type DetailField } from "./DetailFields";
+import { Copyable } from "../Copyable.js";
+import { DetailFields, type DetailField } from "./DetailFields.js";
 
 // --- badge ---
 
