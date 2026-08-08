@@ -1,6 +1,6 @@
 {
   "name": "@a2zb/react",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "files": [
     "dist"
@@ -8,7 +8,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@a2zb/lib": "workspace:*",
+    "@a2zb/lib": "1.0.1",
     "clsx": "^2.1.1",
     "focus-trap-react": "^12.0.0",
     "tailwind-merge": "^3.6.0"

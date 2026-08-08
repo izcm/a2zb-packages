@@ -1,0 +1,262 @@
+import { ObjectId } from "mongodb";
+import { describe, expect, it } from "vitest";
+import {
+  buildCursorFilter,
+  buildSortSpec,
+  cursorTag,
+  encodeCursor,
+  toMongo,
+  walkPath,
+} from "../cursor.js";
+import { CursorPageCore } from "../types.js";
+
+/* ======================================
+    walkPath
+====================================== */
+
+describe("walkPath", () => {
+  // --- happy paths ---
+
+  it("returns value at top-level property", () => {
+    const obj = { a: 5 };
+
+    expect(walkPath(obj, "a")).toBe(5);
+  });
+
+  it("returns value at nested dotted value", () => {
+    const obj = { a: { b: { c: "hello" } } };
+
+    expect(walkPath(obj, "a.b.c")).toBe("hello");
+  });
+
+  it("does not mutate original object", () => {
+    const obj = { a: { b: 2 } };
+    walkPath(obj, "a.b");
+
+    expect(obj).toEqual({ a: { b: 2 } });
+  });
+
+  // --- unhappy paths ---
+
+  it("returns undefined when path segment does not exist", () => {
+    const obj = { a: { b: 2 } };
+
+    expect(() => walkPath(obj, "a.c")).not.toThrow();
+    expect(walkPath(obj, "a.c")).toBeUndefined();
+  });
+
+  it("returns undefined when intermediate value is null", () => {
+    const obj = { a: { b: null } };
+
+    expect(walkPath(obj, "a.b.c")).toBeUndefined();
+  });
+
+  it("returns undefined when intermediate value is null", () => {
+    const obj = { a: null };
+
+    expect(walkPath(obj, "a.b")).toBeUndefined();
+  });
+
+  it("returns undefined when object is empty", () => {
+    const obj = {};
+
+    expect(walkPath(obj, "a.b")).toBeUndefined();
+  });
+
+  it("supports numeric keys (arrays)", () => {
+    const obj = { a: [{ b: 10 }] };
+
+    expect(walkPath(obj, "a.0.b")).toBe(10);
+  });
+});
+
+/* =======================================================
+   encodeCursor
+======================================================= */
+
+describe("cursorTag", () => {
+  it.each([
+    { value: "001", tag: "s" },
+    { value: 10, tag: "n" },
+  ])("tags $value as $tag", ({ value, tag }) => {
+    expect(cursorTag(value)).toBe(tag);
+  });
+});
+
+describe("encodeCursor", () => {
+  it.each([
+    { value: "001", tag: "s" },
+    { value: 10, tag: "n" },
+  ])(
+    "encodes a $tag-tagged value and ObjectId into a cursor string",
+    ({ value, tag }) => {
+      const id = new ObjectId();
+      const cursor = encodeCursor(value, id);
+
+      expect(cursor).toBe(`${tag}${value}_${id.toString()}`);
+    },
+  );
+
+  it("produces unique cursors for different ObjectIds", () => {
+    const c1 = encodeCursor(5, new ObjectId());
+    const c2 = encodeCursor(5, new ObjectId());
+
+    expect(c1).not.toBe(c2);
+  });
+
+  it("produces unique cursors for different values with same ObjectId", () => {
+    const id = new ObjectId();
+
+    const c1 = encodeCursor(5, id);
+    const c2 = encodeCursor(6, id);
+
+    expect(c1).not.toBe(c2);
+  });
+
+  it("can be parsed back into value and objectId", () => {
+    const id = new ObjectId();
+    const cursor = encodeCursor(5, id);
+
+    const [value, rawId] = cursor.split("_");
+
+    expect(value).toBe("n5");
+    expect(new ObjectId(id)).toEqual(id);
+  });
+});
+
+/* =======================================================
+   buildSortSpec
+======================================================= */
+
+/* =======================================================
+   toMongo (dir conversion)
+======================================================= */
+
+describe("toMongo", () => {
+  it("maps asc -> 1", () => {
+    expect(toMongo("asc")).toBe(1);
+  });
+
+  it("maps desc -> -1", () => {
+    expect(toMongo("desc")).toBe(-1);
+  });
+
+  it("is deterministic", () => {
+    expect(toMongo("asc")).toBe(toMongo("asc"));
+    expect(toMongo("desc")).toBe(toMongo("desc"));
+  });
+});
+
+describe("buildSortSpec", () => {
+  it("sets primary and secondary sort field as expected", () => {
+    const spec = buildSortSpec("primary", 1);
+
+    const specKeys = Object.keys(spec);
+
+    expect(specKeys[0]).toBe("primary");
+    expect(specKeys[1]).toBe("_id");
+  });
+
+  function testDirection(dir: 1 | -1) {
+    const spec = buildSortSpec("sortField", dir);
+    const dirs = Object.values(spec);
+    expect(dirs).toEqual([dir, dir]);
+  }
+
+  it("sets ascending direction for primary and secondary sort key", () => {
+    testDirection(1);
+  });
+
+  it("sets descending direction for primary and secondary sort key", () => {
+    testDirection(-1);
+  });
+});
+
+/* =======================================================
+   buildCursorFilter
+======================================================= */
+
+describe("buildCursorFilter", () => {
+  function buildBaseTest(
+    overrides: Partial<Omit<CursorPageCore, "limit">> = {},
+  ): {
+    id: ObjectId;
+    sortKeyValue: number;
+    cursor: string;
+    sortKeyName: string;
+    res: any;
+  } {
+    const id = new ObjectId();
+    const sortKeyValue = 1;
+
+    const sortKeyName = overrides.sortField ?? "sortField";
+    const cursor =
+      overrides.cursor ?? `${cursorTag(sortKeyValue)}${sortKeyValue}_${id}`;
+    const sortDir = overrides.sortDir ?? 1;
+
+    const res = buildCursorFilter({ sortField: sortKeyName, sortDir, cursor });
+    if (!res) throw new Error("didn't build cursor");
+
+    return { id, sortKeyValue, cursor, sortKeyName, res };
+  }
+
+  it("returns null when cursor is not provided", () => {
+    const res = buildCursorFilter({
+      sortField: "field",
+      sortDir: 1,
+      cursor: undefined,
+    });
+    expect(res).toBeNull();
+  });
+
+  it("uses $gt for ascending order", () => {
+    const { id, sortKeyValue, sortKeyName, res } = buildBaseTest();
+
+    expect(res.$or[0]).toStrictEqual({ [sortKeyName]: { $gt: sortKeyValue } });
+    expect(res.$or[1]).toStrictEqual({
+      [sortKeyName]: sortKeyValue,
+      _id: { $gt: id },
+    });
+  });
+
+  it("uses $lt for descending order", () => {
+    const { id, sortKeyValue, sortKeyName, res } = buildBaseTest({
+      sortDir: -1,
+    });
+
+    expect(res.$or[0]).toStrictEqual({ [sortKeyName]: { $lt: sortKeyValue } });
+    expect(res.$or[1]).toStrictEqual({
+      [sortKeyName]: sortKeyValue,
+      _id: { $lt: id },
+    });
+  });
+
+  it("throws on malformed cursor", () => {
+    expect(() =>
+      buildCursorFilter({ sortField: "x", sortDir: 1, cursor: "bad_cursor" }),
+    ).toThrow();
+  });
+
+  it("throws on malformed ObjectId in a string-tagged cursor", () => {
+    expect(() =>
+      buildCursorFilter({
+        sortField: "x",
+        sortDir: 1,
+        cursor: "s001_notanobjectid",
+      }),
+    ).toThrow();
+  });
+
+  it("preserves a large numeric string value exactly, with no Number() precision loss", () => {
+    const id = new ObjectId();
+    // exceeds Number.MAX_SAFE_INTEGER's exact-representation range
+    const value = "90071992547409911234567890";
+    const cursor = encodeCursor(value, id);
+
+    const res = buildCursorFilter({ sortField: "sortField", sortDir: 1, cursor });
+    if (!res) throw new Error("didn't build cursor");
+
+    expect(res.$or[0]).toStrictEqual({ sortField: { $gt: value } });
+    expect(res.$or[1]).toStrictEqual({ sortField: value, _id: { $gt: id } });
+  });
+});

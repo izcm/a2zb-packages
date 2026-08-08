@@ -1,6 +1,6 @@
 import { ReactNode, RefObject, useEffect } from "react";
 
-import { ArrowRow } from "../data-display/index.js";
+import { ArrowRow, defaultArrowClasses } from "../data-display/index.js";
 import { ArrowList } from "../navigation/index.js";
 import { cn } from "@/lib/utils/cn.js";
 
@@ -15,7 +15,7 @@ export type GalleryProps<T> = {
   galleryItem: (item: T) => ReactNode;
   isFresh?: (item: T) => boolean;
   galleryView?: "list" | "card";
-  arrowClasses?: { selected?: string; default?: string };
+  itemClassName?: (isSelected: boolean) => string;
 
   // ref + pagination
   ref?: RefObject<HTMLUListElement | null>;
@@ -32,7 +32,7 @@ export function Gallery<T extends { id: string }>({
   onEnter,
   isFresh,
   galleryView = "list",
-  arrowClasses,
+  itemClassName,
   ref,
   onLoadMore,
   isLoading,
@@ -97,7 +97,6 @@ export function Gallery<T extends { id: string }>({
     galleryView === "list"
       ? {
           arrowList: "flex flex-col gap-4",
-          arrowRow: "border border-default/65 rounded-xl transition",
         }
       : {
           arrowList:
@@ -126,19 +125,20 @@ export function Gallery<T extends { id: string }>({
               onEnter={onEnter ? () => onEnter(item) : undefined}
               dataId={item.id}
               className={cn(
-                galleryClasses.arrowRow,
+                defaultArrowClasses.base,
 
                 // default
-                !isSelected &&
-                  !isFresh?.(item) &&
-                  cn("hover:bg-white/15 bg-surface/75", arrowClasses?.default),
+                !isSelected && !isFresh?.(item) && defaultArrowClasses.hover,
 
                 // fresh
                 isFresh?.(item) && "fresh",
 
                 // selected
-                isSelected && cn("bg-accent/25", arrowClasses?.selected),
+                isSelected && defaultArrowClasses.selected,
+
+                itemClassName?.(isSelected),
               )}
+              bare // strip default classes
             >
               {galleryItem(item)}
             </ArrowRow>

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { ReactNode } from "react";
-
-// keep in sync with @a2zb/react's ImageRow (plain <img> variant)
+import { cn } from "@/lib/utils/cn";
 
 type Props = {
   image: string;
@@ -20,15 +19,20 @@ export function ImageRow({
   endContent,
   imageBadge,
   imageSize = 50,
-  className = "",
+  className,
 }: Props) {
   return (
-    <div className={`grid grid-cols-[auto_1fr_auto] items-center gap-4 py-1 px-2 ${className}`}>
+    <div
+      className={cn(
+        "grid grid-cols-[auto_1fr_auto] items-center gap-4 py-1 px-2",
+        className,
+      )}
+    >
       <div data-slot="image-wrap" className="relative shrink-0">
         <Image
           data-slot="image"
           src={image}
-          alt={typeof title === "string" ? title : ""}
+          alt={image}
           width={imageSize}
           height={imageSize}
           className="rounded object-cover"

@@ -6,6 +6,7 @@ packages:
   - "lib"
   - "viem"
   - "react-wagmi"
+  - "mongo"
 allowBuilds:
   bufferutil: true
   esbuild: true
@@ -13,4 +14,4 @@ allowBuilds:
   sharp: false
   utf-8-validate: true
 minimumReleaseAgeExclude:
-  - "@a2zb/lib@1.0.0"
+  - "@a2zb/lib@1.0.1"
