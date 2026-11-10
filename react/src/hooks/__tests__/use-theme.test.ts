@@ -56,7 +56,7 @@ describe("useTheme", () => {
     });
 
     it("persists theme to localStorage", () => {
-      const spy = vi.spyOn(Storage.prototype, "setItem");
+      const spy = vi.spyOn(localStorage, "setItem");
 
       const { applyTheme } = setup();
       act(() => {
