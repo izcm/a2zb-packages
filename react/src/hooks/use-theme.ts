@@ -6,7 +6,10 @@ import { useEffect, useState } from 'react'
  */
 export function useTheme() {
   const [theme, setTheme] = useState<string>(
-    () => (localStorage.getItem('theme') as string | null) ?? 'runtime'
+    () =>
+      (localStorage.getItem('theme') as string | null) ??
+      document.documentElement.getAttribute('data-theme') ??
+      'runtime'
   )
 
   function apply(t: string) {

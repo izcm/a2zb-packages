@@ -6,6 +6,7 @@ import { useTheme } from "../use-theme.js";
 describe("useTheme", () => {
   beforeEach(() => {
     localStorage.clear();
+    document.documentElement.removeAttribute("data-theme");
   });
 
   function setup() {
@@ -22,6 +23,13 @@ describe("useTheme", () => {
     it("defaults to runtime theme when storage is empty", () => {
       const { getTheme } = setup();
       expect(getTheme()).toBe("runtime");
+    });
+
+    it("uses the page's data-theme when storage is empty", () => {
+      document.documentElement.setAttribute("data-theme", "light");
+
+      const { getTheme } = setup();
+      expect(getTheme()).toBe("light");
     });
 
     it("restores theme from storage on mount", () => {

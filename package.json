@@ -5,7 +5,8 @@
     "clean": "rm -rf node_modules dist */node_modules */dist",
     "tree": "tree -I \"node_modules|dist\"",
     "publish:lib": "pnpm --filter @a2zb/lib build && pnpm --filter @a2zb/lib publish --no-git-checks",
-    "publish:node": "pnpm --filter @a2zb/node build && pnpm --filter @a2zb/node publish --no-git-checks",
+    "publish:node": "pnpm --filter @a2zb/node build && pnpm --filter @a2zb/node publish --no-git-checks --access public",
+    "publish:types": "pnpm --filter @a2zb/types build && pnpm --filter @a2zb/types publish --no-git-checks --access public",
     "publish:next": "pnpm --filter @a2zb/next build && pnpm --filter @a2zb/next publish --no-git-checks",
     "publish:react": "pnpm --filter @a2zb/react build && pnpm --filter @a2zb/react publish --no-git-checks",
     "publish:styles": "pnpm --filter @a2zb/styles publish --no-git-checks",
@@ -14,8 +15,5 @@
     "publish:react-wagmi": "pnpm --filter @a2zb/blockchain-react-wagmi build && pnpm --filter @a2zb/blockchain-react-wagmi publish --no-git-checks",
     "publish:mongo": "pnpm --filter @a2zb/mongo build && pnpm --filter @a2zb/mongo publish --no-git-checks",
     "publish:all": "pnpm -r build && pnpm -r publish --no-git-checks"
-  },
-  "devDependencies": {
-    "typescript": "^6.0.3"
   }
 }

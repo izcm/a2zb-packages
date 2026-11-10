@@ -16,6 +16,7 @@
   --color-muted: var(--muted);
   --color-faint: var(--faint);
   --color-extra-faint: color-mix(in oklab, var(--faint) 50%, transparent);
+  --color-fg-tinted: color-mix(in oklab, var(--fg), var(--accent) 32%);
 
   /* --- borders --- */
   --color-line: var(--line);
@@ -174,11 +175,11 @@
 :root[data-theme="void"] {
   color-scheme: dark;
 
-  --ground: #010208;
-  --raised: #0b0f29; /* noticeably lifted */
-  --lowered: #0a0b1b;
-  --elevated: #131a3d;
-  --elevated-alt: #182050;
+  --ground: #030304;
+  --raised: #0c0c0f;
+  --lowered: #09090b;
+  --elevated: #121317;
+  --elevated-alt: #17181c;
 
   --fg: rgba(220, 222, 235, 0.95);
   --subtle: rgba(190, 195, 225, 0.78);
